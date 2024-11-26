@@ -1,20 +1,41 @@
-import { Box, createTheme, ThemeProvider } from "@mui/material";
-import React from "react";
+import { Box, ThemeProvider, Typography } from "@mui/material";
+import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header";
-import { Layout } from "./components/Layout"
-
-const theme = createTheme({});
+import { Layout } from "./components/Layout";
+import { appTheme } from "./config/theme";
+import { CategoryList } from "./features/categories/CategoryList";
+import { CategoryCreate } from "./features/categories/CategoryCreate";
+import { CategoryEdit } from "./features/categories/CategoryEdit";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={appTheme}>
       <Box
         component="main"
-        sx={{ height: "100vh", backgroundColor: "#000" }}
+        sx={{
+          height: "100vh",
+          backgroundColor: (theme) => theme.palette.grey[900],
+        }}
       >
-        <Header/>
+        <Header />
         <Layout>
-          <h1>Olá, mundo!</h1>
+          <h1>Welcome!</h1>
+          <Routes>
+            <Route path="/" element={<CategoryList />} />
+            <Route path="/categories" element={<CategoryList />} />
+            <Route path="/categories/create" element={<CategoryCreate />} />
+            <Route path="/categories/edit/:id" element={<CategoryEdit />} />
+
+            <Route
+              path="*"
+              element={
+                <Box>
+                  <Typography variant="h1">404</Typography>
+                  <Typography variant="h2">Page not found</Typography>
+                </Box>
+              }
+            />
+          </Routes>
         </Layout>
       </Box>
     </ThemeProvider>
